@@ -52,7 +52,7 @@ export const Login: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="input-leirisonda"
-              placeholder="Enter your email"
+              placeholder="Introduza o seu email"
               required
             />
           </div>
@@ -62,7 +62,7 @@ export const Login: React.FC = () => {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Password
+              Palavra-passe
             </label>
             <input
               id="password"
@@ -70,7 +70,7 @@ export const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="input-leirisonda"
-              placeholder="Enter your password"
+              placeholder="Introduza a sua palavra-passe"
               required
             />
           </div>
@@ -80,7 +80,7 @@ export const Login: React.FC = () => {
             disabled={isLoading}
             className="btn-leirisonda w-full"
           >
-            {isLoading ? "Signing in..." : "Sign In"}
+            {isLoading ? "A entrar..." : "Entrar"}
           </button>
         </form>
 
