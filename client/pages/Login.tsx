@@ -85,9 +85,24 @@ export const Login: React.FC = () => {
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          <p>Credenciais de demonstração:</p>
-          <p>Email: admin@leirisonda.pt</p>
-          <p>Palavra-passe: admin123</p>
+          <p className="font-semibold mb-2">Utilizadores disponíveis:</p>
+          <div className="text-xs space-y-1">
+            <p>
+              <strong>Admin:</strong> admin@leirisonda.pt / admin123
+            </p>
+            <p>
+              <strong>Gestor:</strong> goncalo@leirisonda.pt / goncalo123
+            </p>
+            <p>
+              <strong>Técnico:</strong> tecnico@leirisonda.pt / tecnico123
+            </p>
+            <p>
+              <strong>Supervisor:</strong> supervisor@leirisonda.pt / super123
+            </p>
+            <p>
+              <strong>Operador:</strong> operador@leirisonda.pt / oper123
+            </p>
+          </div>
         </div>
       </div>
     </div>
