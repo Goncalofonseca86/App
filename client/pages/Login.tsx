@@ -85,9 +85,9 @@ export const Login: React.FC = () => {
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          <p>Demo credentials:</p>
+          <p>Credenciais de demonstração:</p>
           <p>Email: admin@leirisonda.pt</p>
-          <p>Password: admin123</p>
+          <p>Palavra-passe: admin123</p>
         </div>
       </div>
     </div>
