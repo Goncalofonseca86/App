@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
 
     const success = await login(email, password);
     if (!success) {
-      setError("Invalid email or password");
+      setError("Email ou palavra-passe inválidos");
     }
   };
 
