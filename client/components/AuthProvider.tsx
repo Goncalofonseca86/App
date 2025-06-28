@@ -49,13 +49,55 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Mock authentication - replace with actual API call
-      if (email === "admin@leirisonda.pt" && password === "admin123") {
-        const mockUser: User = {
+      // Utilizadores pré-definidos do sistema Leirisonda
+      const users = [
+        {
           id: "1",
           email: "admin@leirisonda.pt",
-          name: "Administrator",
+          password: "admin123",
+          name: "Administrador Leirisonda",
           role: "admin",
+        },
+        {
+          id: "2",
+          email: "goncalo@leirisonda.pt",
+          password: "goncalo123",
+          name: "Gonçalo Fonseca",
+          role: "gestor",
+        },
+        {
+          id: "3",
+          email: "tecnico@leirisonda.pt",
+          password: "tecnico123",
+          name: "Técnico Obras",
+          role: "tecnico",
+        },
+        {
+          id: "4",
+          email: "supervisor@leirisonda.pt",
+          password: "super123",
+          name: "Supervisor Piscinas",
+          role: "supervisor",
+        },
+        {
+          id: "5",
+          email: "operador@leirisonda.pt",
+          password: "oper123",
+          name: "Operador Campo",
+          role: "operador",
+        },
+      ];
+
+      const foundUser = users.find(
+        (u) => u.email === email && u.password === password,
+      );
+
+      if (foundUser) {
+        const mockUser: User = {
+          id: foundUser.id,
+          email: foundUser.email,
+          name: foundUser.name,
+          role: foundUser.role,
         };
         setUser(mockUser);
         localStorage.setItem("leirisonda_user", JSON.stringify(mockUser));
