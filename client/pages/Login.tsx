@@ -1,0 +1,95 @@
+import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../components/AuthProvider";
+
+export const Login: React.FC = () => {
+  const { user, login, isLoading } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const success = await login(email, password);
+    if (!success) {
+      setError("Invalid email or password");
+    }
+  };
+
+  return (
+    <div className="login-hero">
+      <div className="login-card p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-leirisonda-primary mb-2">
+            Leirisonda
+          </h1>
+          <p className="text-gray-600">Sign in to your account</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-leirisonda"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-leirisonda"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn-leirisonda w-full"
+          >
+            {isLoading ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+
+        <div className="mt-6 text-center text-sm text-gray-600">
+          <p>Demo credentials:</p>
+          <p>Email: admin@leirisonda.pt</p>
+          <p>Password: admin123</p>
+        </div>
+      </div>
+    </div>
+  );
+};
