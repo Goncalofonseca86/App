@@ -60,9 +60,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         },
         {
           id: "2",
-          email: "goncalo@leirisonda.pt",
-          password: "goncalo123",
-          name: "Gonçalo Fonseca",
+          email: "admin@leirisonda.pt",
+          password: "admin123",
+          name: "Administrador Leirisonda",
           role: "gestor",
         },
         {
