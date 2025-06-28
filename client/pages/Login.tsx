@@ -29,7 +29,7 @@ export const Login: React.FC = () => {
           <h1 className="text-3xl font-bold text-leirisonda-primary mb-2">
             Leirisonda
           </h1>
-          <p className="text-gray-600">Sign in to your account</p>
+          <p className="text-gray-600">Sistema de Gestão de Obras</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
