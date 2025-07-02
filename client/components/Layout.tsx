@@ -7,11 +7,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="leirisonda-layout">
       <Sidebar />
-      <main className="flex-1 overflow-auto bg-gray-50">
-        <div className="p-6">{children}</div>
-      </main>
+      <main className="flex-1 overflow-auto">{children}</main>
     </div>
   );
 }
