@@ -149,7 +149,17 @@ export default function Login() {
           <p className="text-sm text-gray-600 mt-4">
             Ou aceda diretamente ao{" "}
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => {
+                // Auto-login as Gonçalo for testing
+                const user = authenticateUser(
+                  "gongonsilva@gmail.com",
+                  "19867gsf",
+                );
+                if (user) {
+                  localStorage.setItem("currentUser", JSON.stringify(user));
+                }
+                navigate("/dashboard");
+              }}
               className="text-leirisonda-primary hover:underline font-medium"
             >
               Dashboard
