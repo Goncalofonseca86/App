@@ -13,11 +13,46 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/create-work" element={<CreateWork />} />
-        <Route path="/atribuicao-obras" element={<WorkAssignment />} />
-        <Route path="/work-assignment" element={<WorkAssignment />} />
-        <Route path="/" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Layout>
+              <Dashboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/create-work"
+          element={
+            <Layout>
+              <CreateWork />
+            </Layout>
+          }
+        />
+        <Route
+          path="/atribuicao-obras"
+          element={
+            <Layout>
+              <WorkAssignment />
+            </Layout>
+          }
+        />
+        <Route
+          path="/work-assignment"
+          element={
+            <Layout>
+              <WorkAssignment />
+            </Layout>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Dashboard />
+            </Layout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
