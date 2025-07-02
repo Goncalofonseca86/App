@@ -11,7 +11,7 @@
     ]
   },
   "scripts": {
-    "dev": "node serve-leirisonda.js",
+    "dev": "node serve-leirisonda.cjs",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.server.ts",
