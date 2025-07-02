@@ -5,6 +5,7 @@ import WorkAssignment from "./pages/WorkAssignment";
 import Dashboard from "./pages/Dashboard";
 import CreateWork from "./pages/CreateWork";
 import WorkUserManagement from "./pages/WorkUserManagement";
+import WorkManagementHub from "./pages/WorkManagementHub";
 import Login from "./pages/Login";
 import "./index.css";
 
@@ -22,6 +23,8 @@ function App() {
           element={<WorkUserManagement />}
         />
         <Route path="/work-user-management" element={<WorkUserManagement />} />
+        <Route path="/gestao-obras" element={<WorkManagementHub />} />
+        <Route path="/work-management" element={<WorkManagementHub />} />
         <Route path="/" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
