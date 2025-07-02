@@ -2,16 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User as UserType, defaultUsers, hasPermission } from "../data/users";
 
-interface CreateWorkForm {
-  title: string;
-  description: string;
-  location: string;
-  priority: "low" | "medium" | "high";
-  estimatedHours: number;
-  deadline: string;
-  destinedUsers: string[];
-}
-
 export default function CreateWork() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
