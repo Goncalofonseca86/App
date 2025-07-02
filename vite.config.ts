@@ -10,4 +10,5 @@ export default defineConfig(() => ({
     outDir: "dist/spa",
   },
   plugins: [],
+  publicDir: "leirisonda-deploy",
 }));
