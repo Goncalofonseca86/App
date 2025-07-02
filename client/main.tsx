@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import WorkAssignment from "./pages/WorkAssignment";
 import Dashboard from "./pages/Dashboard";
-import CreateWork from "./pages/CreateWork";
+import CreateWork from "./pages/CreateWorkSimple";
 import Login from "./pages/Login";
 import "./index.css";
 
