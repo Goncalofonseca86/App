@@ -241,12 +241,22 @@ export default function Dashboard() {
                   Nova Obra
                 </Button>
               )}
+              {hasPermission(currentUser, "assign_works") && (
+                <Button
+                  variant="outline"
+                  onClick={() => navigate("/gestao-utilizadores-obras")}
+                  className="border-green-200 text-green-700 hover:bg-green-50"
+                >
+                  <Users className="w-4 h-4 mr-2" />
+                  Gerir Utilizadores
+                </Button>
+              )}
               <Button
                 variant="outline"
                 onClick={() => navigate("/work-assignment")}
               >
                 <Users className="w-4 h-4 mr-2" />
-                Atribuição
+                Atribuição Avançada
               </Button>
             </div>
           </div>
