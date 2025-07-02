@@ -90,7 +90,9 @@ export default function CreateWork() {
     console.log("Obra criada:", newWork);
     console.log("Total de obras guardadas:", existingWorks.length);
 
-    alert(`Obra criada com sucesso! ${formData.destinedUsers.length} utilizadores atribuídos.`);
+    alert(
+      `Obra criada com sucesso! ${formData.destinedUsers.length} utilizadores atribuídos.`,
+    );
     navigate("/dashboard");
   };
 
@@ -393,11 +395,18 @@ export default function CreateWork() {
                 {/* Utilizadores Disponíveis */}
                 <div>
                   <h4 className="font-medium mb-3">
-                    Adicionar utilizadores: ({availableUsers.filter(user => !formData.destinedUsers.includes(user.id)).length} disponíveis)
+                    Adicionar utilizadores: (
+                    {
+                      availableUsers.filter(
+                        (user) => !formData.destinedUsers.includes(user.id),
+                      ).length
+                    }{" "}
+                    disponíveis)
                   </h4>
                   {availableUsers.length === 0 && (
                     <div className="text-sm text-red-600 mb-3 p-2 bg-red-50 rounded">
-                      ⚠️ Nenhum utilizador carregado. Verifique se está autenticado.
+                      ⚠️ Nenhum utilizador carregado. Verifique se está
+                      autenticado.
                     </div>
                   )}
                   <div className="space-y-2 max-h-60 overflow-y-auto">
@@ -446,15 +455,14 @@ export default function CreateWork() {
               type="submit"
               className="btn-leirisonda"
               disabled={
-                !formData.title ||
-                !formData.description ||
-                !formData.location
+                !formData.title || !formData.description || !formData.location
               }
             >
               Criar Obra
             </Button>
           </div>
         </form>
+      </div>
     </div>
   );
 }
