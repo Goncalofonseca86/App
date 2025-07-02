@@ -52,21 +52,21 @@ export default function CreateWork() {
 
   useEffect(() => {
     const userData = localStorage.getItem("currentUser");
-    console.log("👤 Dados do utilizador no localStorage:", userData);
 
     if (userData) {
       const user = JSON.parse(userData);
-      console.log("👤 Utilizador atual:", user);
       setCurrentUser(user);
 
-      // Carregar todos os utilizadores activos
+      // Carregar TODOS os utilizadores (incluindo o próprio para teste)
       const users = defaultUsers.filter((u) => u.isActive);
-      console.log("📋 Total utilizadores no sistema:", defaultUsers.length);
-      console.log("✅ Utilizadores activos:", users.length);
-      console.log("📝 Lista completa:", users);
       setAvailableUsers(users);
+
+      // Debug: mostrar utilizadores disponíveis
+      console.log(
+        "Utilizadores disponíveis para atribuição:",
+        users.map((u) => `${u.name} (${u.role})`),
+      );
     } else {
-      console.log("❌ Nenhum utilizador logado, redirecionando...");
       navigate("/login");
     }
   }, [navigate]);
