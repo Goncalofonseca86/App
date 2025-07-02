@@ -34,6 +34,29 @@ export const defaultUsers: User[] = [
     lastLogin: new Date().toISOString(),
     isActive: true,
   },
+
+  // Utilizador Limitado
+  {
+    id: "user1",
+    name: "Alexandre Fernandes",
+    email: "alexkanaryta@gmail.com",
+    password: "69alexandre",
+    role: "technician",
+    department: "Operações",
+    permissions: [
+      "view_works",
+      "edit_works",
+      "view_pools",
+      "edit_pools",
+      "view_pool_maintenance",
+      "edit_pool_maintenance",
+      "create_pool_maintenance",
+    ],
+    phone: "+351 912 000 001",
+    createdAt: "2024-01-01",
+    lastLogin: "2024-01-15T09:00:00Z",
+    isActive: true,
+  },
 ];
 
 export const getRoleDisplayName = (role: string): string => {
@@ -84,8 +107,20 @@ export const getPermissionDisplayName = (permission: string): string => {
       return "Supervisionar Obras";
     case "view_works":
       return "Ver Obras";
+    case "edit_works":
+      return "Editar Obras";
     case "update_work_status":
       return "Atualizar Estado";
+    case "view_pools":
+      return "Ver Piscinas";
+    case "edit_pools":
+      return "Editar Piscinas";
+    case "view_pool_maintenance":
+      return "Ver Manutenções";
+    case "edit_pool_maintenance":
+      return "Editar Manutenções";
+    case "create_pool_maintenance":
+      return "Criar Manutenções";
     default:
       return permission;
   }
