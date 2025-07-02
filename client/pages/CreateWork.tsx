@@ -16,6 +16,7 @@ import {
   getRoleColor,
   hasPermission,
 } from "../data/users";
+import UserAssignmentSelector from "../components/UserAssignmentSelector";
 import {
   ArrowLeft,
   Plus,
@@ -342,133 +343,14 @@ export default function CreateWork() {
             </Card>
 
             {/* Seleção de Utilizadores */}
-            <Card className="card-leirisonda">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="w-5 h-5" />
-                  Utilizadores Destinados ({formData.destinedUsers.length})
-                </CardTitle>
-                <CardDescription>
-                  Selecione os utilizadores que irão trabalhar nesta obra
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* Utilizadores Selecionados */}
-                {formData.destinedUsers.length > 0 && (
-                  <div className="mb-6">
-                    <h4 className="font-medium mb-3 text-green-700">
-                      Selecionados:
-                    </h4>
-                    <div className="space-y-2">
-                      {formData.destinedUsers.map((userId) => {
-                        const user = availableUsers.find(
-                          (u) => u.id === userId,
-                        );
-                        return user ? (
-                          <div
-                            key={user.id}
-                            className="flex items-center justify-between bg-green-50 p-3 rounded-lg border border-green-200"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div>
-                                <div className="font-medium text-green-900">
-                                  {user.name}
-                                </div>
-                                <div className="text-sm text-green-700">
-                                  {user.department}
-                                </div>
-                              </div>
-                              <Badge className={getRoleColor(user.role)}>
-                                {getRoleDisplayName(user.role)}
-                              </Badge>
-                            </div>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={() => removeUserFromWork(user.id)}
-                              className="border-red-200 text-red-700 hover:bg-red-50"
-                            >
-                              <X className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        ) : null;
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* Utilizadores Disponíveis */}
-                <div>
-                  <h4 className="font-medium mb-3">
-                    Adicionar utilizadores: (
-                    {
-                      availableUsers.filter(
-                        (user) => !formData.destinedUsers.includes(user.id),
-                      ).length
-                    }{" "}
-                    disponíveis de {availableUsers.length} total)
-                  </h4>
-
-                  {/* Debug: Mostrar estado do carregamento */}
-                  {availableUsers.length === 0 && (
-                    <div className="text-sm text-red-600 mb-3 p-3 bg-red-50 rounded border border-red-200">
-                      <div className="font-medium">
-                        ⚠️ Nenhum utilizador carregado
-                      </div>
-                      <div className="text-xs mt-1">
-                        Verifique se está autenticado e tente recarregar a
-                        página
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Lista de utilizadores disponíveis */}
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {availableUsers.length > 0 ? (
-                      availableUsers
-                        .filter(
-                          (user) => !formData.destinedUsers.includes(user.id),
-                        )
-                        .map((user) => (
-                          <div
-                            key={user.id}
-                            className="flex items-center justify-between p-3 border rounded-lg hover:bg-blue-50 cursor-pointer transition-colors"
-                            onClick={() => addUserToWork(user.id)}
-                          >
-                            <div className="flex items-center gap-3">
-                              <div>
-                                <div className="font-medium text-gray-900">
-                                  {user.name}
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {user.department} • {user.email}
-                                </div>
-                              </div>
-                              <Badge className={getRoleColor(user.role)}>
-                                {getRoleDisplayName(user.role)}
-                              </Badge>
-                            </div>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              className="border-blue-200 text-blue-600 hover:bg-blue-50"
-                            >
-                              <Plus className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        ))
-                    ) : (
-                      <div className="text-center py-6 text-gray-500">
-                        <Users className="w-8 h-8 mx-auto mb-2 text-gray-300" />
-                        <p>Nenhum utilizador disponível</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <UserAssignmentSelector
+              availableUsers={availableUsers}
+              selectedUserIds={formData.destinedUsers}
+              onUserSelect={addUserToWork}
+              onUserRemove={removeUserFromWork}
+              currentUserId={currentUser.id}
+              allowSelfAssignment={true}
+            />
           </div>
 
           {/* Botões de Ação */}
