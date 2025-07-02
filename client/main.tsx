@@ -15,18 +15,78 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/create-work" element={<CreateWork />} />
-        <Route path="/atribuicao-obras" element={<WorkAssignment />} />
-        <Route path="/work-assignment" element={<WorkAssignment />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Layout>
+              <Dashboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/create-work"
+          element={
+            <Layout>
+              <CreateWork />
+            </Layout>
+          }
+        />
+        <Route
+          path="/atribuicao-obras"
+          element={
+            <Layout>
+              <WorkAssignment />
+            </Layout>
+          }
+        />
+        <Route
+          path="/work-assignment"
+          element={
+            <Layout>
+              <WorkAssignment />
+            </Layout>
+          }
+        />
         <Route
           path="/gestao-utilizadores-obras"
-          element={<WorkUserManagement />}
+          element={
+            <Layout>
+              <WorkUserManagement />
+            </Layout>
+          }
         />
-        <Route path="/work-user-management" element={<WorkUserManagement />} />
-        <Route path="/gestao-obras" element={<WorkManagementHub />} />
-        <Route path="/work-management" element={<WorkManagementHub />} />
-        <Route path="/" element={<Dashboard />} />
+        <Route
+          path="/work-user-management"
+          element={
+            <Layout>
+              <WorkUserManagement />
+            </Layout>
+          }
+        />
+        <Route
+          path="/gestao-obras"
+          element={
+            <Layout>
+              <WorkManagementHub />
+            </Layout>
+          }
+        />
+        <Route
+          path="/work-management"
+          element={
+            <Layout>
+              <WorkManagementHub />
+            </Layout>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Dashboard />
+            </Layout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
