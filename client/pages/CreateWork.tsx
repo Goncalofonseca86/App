@@ -56,28 +56,10 @@ export default function CreateWork() {
       const user = JSON.parse(userData);
       setCurrentUser(user);
 
-      // Mostrar todos os utilizadores activos (incluindo o próprio)
-      setAvailableUsers(defaultUsers.filter((u) => u.isActive));
-
-      // Criar obra de teste se não existir nenhuma (apenas para debug)
-      const existingWorks = JSON.parse(localStorage.getItem("works") || "[]");
-      if (existingWorks.length === 0) {
-        const testWork = {
-          id: "test-work-1",
-          title: "Manutenção Piscina - Cliente Teste",
-          description: "Limpeza e tratamento da água da piscina",
-          location: "Porto, Portugal",
-          priority: "medium" as const,
-          estimatedHours: 4,
-          deadline: "2024-12-31",
-          status: "pending" as const,
-          destinedUsers: [user.id], // Atribuir ao utilizador atual
-          createdBy: user.id,
-          createdAt: new Date().toISOString(),
-        };
-        localStorage.setItem("works", JSON.stringify([testWork]));
-        console.log("Obra de teste criada:", testWork);
-      }
+      // Carregar todos os utilizadores activos
+      const users = defaultUsers.filter((u) => u.isActive);
+      setAvailableUsers(users);
+      console.log("Utilizadores carregados:", users.length, users);
     } else {
       navigate("/login");
     }
