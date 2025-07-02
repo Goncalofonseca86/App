@@ -9,6 +9,9 @@ import {
   Settings,
   Menu,
   X,
+  UserPlus,
+  Building,
+  ClipboardList,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -36,19 +39,29 @@ export default function Sidebar() {
       path: "/dashboard",
     },
     {
+      icon: Building,
+      label: "Centro de Gestão",
+      path: "/gestao-obras",
+    },
+    {
       icon: Plus,
       label: "Nova Obra",
       path: "/create-work",
     },
     {
+      icon: UserPlus,
+      label: "Gerir Utilizadores",
+      path: "/gestao-utilizadores-obras",
+    },
+    {
+      icon: ClipboardList,
+      label: "Atribuição Avançada",
+      path: "/work-assignment",
+    },
+    {
       icon: Waves,
       label: "Manutenção Piscinas",
       path: "/pool-maintenance",
-    },
-    {
-      icon: Settings,
-      label: "Atribuição de Obras",
-      path: "/work-assignment",
     },
   ];
 
