@@ -15,7 +15,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, User, Clock, CheckCircle } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  User,
+  Clock,
+  CheckCircle,
+  LogOut,
+} from "lucide-react";
+import {
+  User as UserType,
+  getRoleDisplayName,
+  getRoleColor,
+  hasPermission,
+} from "../data/users";
+import { useNavigate } from "react-router-dom";
 
 interface Work {
   id: string;
@@ -39,6 +53,8 @@ interface Technician {
 }
 
 export default function WorkAssignment() {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [works, setWorks] = useState<Work[]>([
     {
       id: "1",
@@ -99,6 +115,21 @@ export default function WorkAssignment() {
       skills: ["Mecânica", "Bombas", "Tubagem"],
     },
   ]);
+
+  useEffect(() => {
+    // Verificar se o utilizador está logado
+    const userData = localStorage.getItem("currentUser");
+    if (userData) {
+      setCurrentUser(JSON.parse(userData));
+    } else {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+  };
 
   const assignWork = (workId: string, technicianId: string) => {
     setWorks((prev) =>
@@ -180,15 +211,56 @@ export default function WorkAssignment() {
     return (current / max) * 100;
   };
 
+  if (!currentUser) {
+    return (
+      <div className="leirisonda-main flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-leirisonda-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const canAssignWorks = hasPermission(currentUser, "assign_works");
+  const canCreateWorks = hasPermission(currentUser, "create_works");
+
   return (
     <div className="leirisonda-main">
+      {/* Header com informações do utilizador */}
       <div className="dashboard-hero">
-        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
-          Atribuição de Obras
-        </h1>
-        <p className="text-white/90">
-          Gerir e atribuir obras aos técnicos disponíveis
-        </p>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
+              Atribuição de Obras
+            </h1>
+            <p className="text-white/90">
+              Gerir e atribuir obras aos técnicos disponíveis
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="text-right">
+              <div className="text-white font-medium">{currentUser.name}</div>
+              <div className="flex items-center gap-2">
+                <Badge className="bg-white/20 text-white border-white/30">
+                  {getRoleDisplayName(currentUser.role)}
+                </Badge>
+                <span className="text-white/70 text-sm">
+                  {currentUser.department}
+                </span>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
+            </Button>
+          </div>
+        </div>
       </div>
 
       <div className="content-grid">
@@ -241,36 +313,44 @@ export default function WorkAssignment() {
                       </div>
 
                       <div className="flex items-center gap-4">
-                        <Select
-                          onValueChange={(techId) =>
-                            assignWork(work.id, techId)
-                          }
-                        >
-                          <SelectTrigger className="w-64">
-                            <SelectValue placeholder="Selecionar técnico" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {technicians
-                              .filter(
-                                (tech) =>
-                                  tech.currentWorkload + work.estimatedHours <=
-                                  tech.maxWorkload,
-                              )
-                              .map((tech) => (
-                                <SelectItem key={tech.id} value={tech.id}>
-                                  <div>
-                                    <div className="font-medium">
-                                      {tech.name}
+                        {canAssignWorks ? (
+                          <Select
+                            onValueChange={(techId) =>
+                              assignWork(work.id, techId)
+                            }
+                          >
+                            <SelectTrigger className="w-64">
+                              <SelectValue placeholder="Selecionar técnico" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {technicians
+                                .filter(
+                                  (tech) =>
+                                    tech.currentWorkload +
+                                      work.estimatedHours <=
+                                    tech.maxWorkload,
+                                )
+                                .map((tech) => (
+                                  <SelectItem key={tech.id} value={tech.id}>
+                                    <div>
+                                      <div className="font-medium">
+                                        {tech.name}
+                                      </div>
+                                      <div className="text-xs text-gray-500">
+                                        {tech.specialization} •{" "}
+                                        {tech.currentWorkload}/
+                                        {tech.maxWorkload}h
+                                      </div>
                                     </div>
-                                    <div className="text-xs text-gray-500">
-                                      {tech.specialization} •{" "}
-                                      {tech.currentWorkload}/{tech.maxWorkload}h
-                                    </div>
-                                  </div>
-                                </SelectItem>
-                              ))}
-                          </SelectContent>
-                        </Select>
+                                  </SelectItem>
+                                ))}
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <div className="text-sm text-gray-500 italic">
+                            Sem permissão para atribuir obras
+                          </div>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -345,14 +425,16 @@ export default function WorkAssignment() {
                                 </div>
                               </div>
                             </div>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => unassignWork(work.id)}
-                              className="border-red-200 text-red-700 hover:bg-red-50"
-                            >
-                              Remover Atribuição
-                            </Button>
+                            {canAssignWorks && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => unassignWork(work.id)}
+                                className="border-red-200 text-red-700 hover:bg-red-50"
+                              >
+                                Remover Atribuição
+                              </Button>
+                            )}
                           </div>
                         )}
                       </CardContent>
