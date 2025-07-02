@@ -15,6 +15,14 @@ export default function Login() {
   const [showUsers, setShowUsers] = useState(false);
   const navigate = useNavigate();
 
+  // Check if user is already logged in
+  React.useEffect(() => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
