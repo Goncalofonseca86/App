@@ -32,12 +32,8 @@ function App() {
   );
 }
 
-const rootElement = document.getElementById("root");
-if (rootElement && !rootElement.hasChildNodes()) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
-}
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
