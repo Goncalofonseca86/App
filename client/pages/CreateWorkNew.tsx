@@ -117,267 +117,98 @@ export default function CreateWork() {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Nova Obra</h1>
-        <p className="text-gray-600">Criar nova obra e atribuir utilizadores</p>
-      </div>
+      <h1 className="text-2xl font-bold mb-4">Nova Obra</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Detalhes da Obra */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Plus className="w-5 h-5" />
-                Detalhes da Obra
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Título *
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      title: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leirisonda-primary"
-                  placeholder="Ex: Manutenção de Piscina - Cliente X"
-                  required
-                />
+      {!currentUser && <div>A carregar utilizador...</div>}
+
+      {currentUser && (
+        <div>
+          <p className="mb-4">Utilizador: {currentUser.name}</p>
+
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold mb-2">
+              Utilizadores Disponíveis ({availableUsers.length})
+            </h2>
+
+            {availableUsers.length === 0 ? (
+              <div className="p-4 bg-red-50 border border-red-200 rounded">
+                <p className="text-red-700">❌ Nenhum utilizador carregado</p>
+                <p className="text-sm text-red-600">
+                  Verifique se está autenticado e se os utilizadores existem
+                </p>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Descrição *
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leirisonda-primary min-h-[100px] resize-y"
-                  placeholder="Descreva os detalhes da obra..."
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <MapPin className="w-4 h-4 inline mr-1" />
-                  Localização *
-                </label>
-                <input
-                  type="text"
-                  value={formData.location}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      location: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leirisonda-primary"
-                  placeholder="Ex: Porto, Vila Nova de Gaia"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Prioridade
-                  </label>
-                  <select
-                    value={formData.priority}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        priority: e.target.value as any,
-                      }))
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leirisonda-primary"
-                  >
-                    <option value="low">Baixa</option>
-                    <option value="medium">Média</option>
-                    <option value="high">Alta</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <Clock className="w-4 h-4 inline mr-1" />
-                    Horas Estimadas
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="100"
-                    value={formData.estimatedHours}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        estimatedHours: parseInt(e.target.value),
-                      }))
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leirisonda-primary"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-1" />
-                  Prazo
-                </label>
-                <input
-                  type="date"
-                  value={formData.deadline}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      deadline: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leirisonda-primary"
-                  required
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Seleção de Utilizadores */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5" />
-                Utilizadores Destinados ({formData.destinedUsers.length})
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Debug Info */}
-              {availableUsers.length === 0 && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                  <div className="flex items-center gap-2 text-red-700">
-                    <AlertTriangle className="w-4 h-4" />
-                    <span className="text-sm font-medium">
-                      Nenhum utilizador disponível
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Utilizadores Selecionados */}
-              {formData.destinedUsers.length > 0 && (
-                <div className="mb-6">
-                  <h4 className="font-medium mb-3 text-green-700">
-                    Selecionados:
-                  </h4>
-                  <div className="space-y-2">
-                    {formData.destinedUsers.map((userId) => {
-                      const user = availableUsers.find((u) => u.id === userId);
-                      return user ? (
+            ) : (
+              <div className="space-y-2">
+                {availableUsers.map((user) => {
+                  const isSelected = selectedUsers.includes(user.id);
+                  return (
+                    <div
+                      key={user.id}
+                      className={`p-3 border rounded cursor-pointer ${
+                        isSelected
+                          ? "bg-green-50 border-green-300"
+                          : "bg-white border-gray-300 hover:bg-gray-50"
+                      }`}
+                      onClick={() => {
+                        if (isSelected) {
+                          setSelectedUsers((prev) =>
+                            prev.filter((id) => id !== user.id),
+                          );
+                        } else {
+                          setSelectedUsers((prev) => [...prev, user.id]);
+                        }
+                      }}
+                    >
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <div className="font-medium">{user.name}</div>
+                          <div className="text-sm text-gray-500">
+                            {user.department}
+                          </div>
+                        </div>
                         <div
-                          key={user.id}
-                          className="flex items-center justify-between bg-green-50 p-3 rounded-lg border border-green-200"
+                          className={`px-2 py-1 rounded text-xs ${
+                            isSelected
+                              ? "bg-green-200 text-green-800"
+                              : "bg-gray-200 text-gray-700"
+                          }`}
                         >
-                          <div className="flex items-center gap-3">
-                            <div>
-                              <div className="font-medium text-green-900">
-                                {user.name}
-                              </div>
-                              <div className="text-sm text-green-700">
-                                {user.department}
-                              </div>
-                            </div>
-                            <Badge className={getRoleColor(user.role)}>
-                              {getRoleDisplayName(user.role)}
-                            </Badge>
-                          </div>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => removeUserFromWork(user.id)}
-                            className="border-red-200 text-red-700 hover:bg-red-50"
-                          >
-                            <X className="w-4 h-4" />
-                          </Button>
+                          {isSelected
+                            ? "✓ Selecionado"
+                            : "Clique para selecionar"}
                         </div>
-                      ) : null;
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {/* Utilizadores Disponíveis */}
-              <div>
-                <h4 className="font-medium mb-3">
-                  Adicionar utilizadores: (
-                  {
-                    availableUsers.filter(
-                      (user) => !formData.destinedUsers.includes(user.id),
-                    ).length
-                  }{" "}
-                  disponíveis)
-                </h4>
-                <div className="space-y-2 max-h-60 overflow-y-auto">
-                  {availableUsers
-                    .filter((user) => !formData.destinedUsers.includes(user.id))
-                    .map((user) => (
-                      <div
-                        key={user.id}
-                        className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
-                        onClick={() => addUserToWork(user.id)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <div className="font-medium">{user.name}</div>
-                            <div className="text-sm text-gray-500">
-                              {user.department}
-                            </div>
-                          </div>
-                          <Badge className={getRoleColor(user.role)}>
-                            {getRoleDisplayName(user.role)}
-                          </Badge>
-                        </div>
-                        <Button type="button" variant="outline" size="sm">
-                          <Plus className="w-4 h-4" />
-                        </Button>
                       </div>
-                    ))}
-                </div>
+                    </div>
+                  );
+                })}
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            )}
+          </div>
 
-        {/* Botões de Ação */}
-        <div className="mt-6 flex justify-end gap-4">
-          <Button
-            type="button"
-            variant="outline"
+          {selectedUsers.length > 0 && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded">
+              <h3 className="font-medium text-green-800 mb-2">
+                Utilizadores Selecionados ({selectedUsers.length})
+              </h3>
+              <div className="text-sm text-green-700">
+                {selectedUsers
+                  .map((userId) => {
+                    const user = availableUsers.find((u) => u.id === userId);
+                    return user?.name;
+                  })
+                  .join(", ")}
+              </div>
+            </div>
+          )}
+
+          <button
             onClick={() => navigate("/dashboard")}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
-            Cancelar
-          </Button>
-          <Button
-            type="submit"
-            disabled={
-              !formData.title || !formData.description || !formData.location
-            }
-          >
-            Criar Obra
-          </Button>
+            Voltar ao Dashboard
+          </button>
         </div>
-      </form>
+      )}
     </div>
   );
 }
