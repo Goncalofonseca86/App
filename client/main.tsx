@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WorkAssignment from "./pages/WorkAssignment";
+import Dashboard from "./pages/Dashboard";
+import CreateWork from "./pages/CreateWork";
 import Login from "./pages/Login";
 import "./index.css";
 
@@ -10,9 +12,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/create-work" element={<CreateWork />} />
         <Route path="/atribuicao-obras" element={<WorkAssignment />} />
         <Route path="/work-assignment" element={<WorkAssignment />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

@@ -23,7 +23,7 @@ export default function Login() {
     if (user) {
       // Guardar dados do utilizador
       localStorage.setItem("currentUser", JSON.stringify(user));
-      navigate("/work-assignment");
+      navigate("/dashboard");
     } else {
       setError("Email ou palavra-passe incorretos");
     }
@@ -35,7 +35,7 @@ export default function Login() {
     const user = authenticateUser(userEmail, userPassword);
     if (user) {
       localStorage.setItem("currentUser", JSON.stringify(user));
-      navigate("/work-assignment");
+      navigate("/dashboard");
     }
   };
 
@@ -139,12 +139,12 @@ export default function Login() {
           )}
 
           <p className="text-sm text-gray-600 mt-4">
-            Ou aceda diretamente à{" "}
+            Ou aceda diretamente ao{" "}
             <button
-              onClick={() => navigate("/work-assignment")}
+              onClick={() => navigate("/dashboard")}
               className="text-leirisonda-primary hover:underline font-medium"
             >
-              Atribuição de Obras
+              Dashboard
             </button>
           </p>
         </div>
