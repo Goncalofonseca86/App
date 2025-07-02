@@ -407,41 +407,64 @@ export default function CreateWork() {
                         (user) => !formData.destinedUsers.includes(user.id),
                       ).length
                     }{" "}
-                    disponíveis)
+                    disponíveis de {availableUsers.length} total)
                   </h4>
+
+                  {/* Debug: Mostrar estado do carregamento */}
                   {availableUsers.length === 0 && (
-                    <div className="text-sm text-red-600 mb-3 p-2 bg-red-50 rounded">
-                      ⚠️ Nenhum utilizador carregado. Verifique se está
-                      autenticado.
+                    <div className="text-sm text-red-600 mb-3 p-3 bg-red-50 rounded border border-red-200">
+                      <div className="font-medium">
+                        ⚠️ Nenhum utilizador carregado
+                      </div>
+                      <div className="text-xs mt-1">
+                        Verifique se está autenticado e tente recarregar a
+                        página
+                      </div>
                     </div>
                   )}
+
+                  {/* Lista de utilizadores disponíveis */}
                   <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {availableUsers
-                      .filter(
-                        (user) => !formData.destinedUsers.includes(user.id),
-                      )
-                      .map((user) => (
-                        <div
-                          key={user.id}
-                          className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
-                          onClick={() => addUserToWork(user.id)}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div>
-                              <div className="font-medium">{user.name}</div>
-                              <div className="text-sm text-gray-500">
-                                {user.department}
+                    {availableUsers.length > 0 ? (
+                      availableUsers
+                        .filter(
+                          (user) => !formData.destinedUsers.includes(user.id),
+                        )
+                        .map((user) => (
+                          <div
+                            key={user.id}
+                            className="flex items-center justify-between p-3 border rounded-lg hover:bg-blue-50 cursor-pointer transition-colors"
+                            onClick={() => addUserToWork(user.id)}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div>
+                                <div className="font-medium text-gray-900">
+                                  {user.name}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {user.department} • {user.email}
+                                </div>
                               </div>
+                              <Badge className={getRoleColor(user.role)}>
+                                {getRoleDisplayName(user.role)}
+                              </Badge>
                             </div>
-                            <Badge className={getRoleColor(user.role)}>
-                              {getRoleDisplayName(user.role)}
-                            </Badge>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </Button>
                           </div>
-                          <Button type="button" variant="outline" size="sm">
-                            <Plus className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      ))}
+                        ))
+                    ) : (
+                      <div className="text-center py-6 text-gray-500">
+                        <Users className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+                        <p>Nenhum utilizador disponível</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
