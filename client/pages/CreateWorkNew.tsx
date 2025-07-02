@@ -1,24 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  User as UserType,
-  defaultUsers,
-  getRoleDisplayName,
-  getRoleColor,
-  hasPermission,
-} from "../data/users";
-import {
-  Plus,
-  X,
-  Users,
-  Calendar,
-  MapPin,
-  Clock,
-  AlertTriangle,
-} from "lucide-react";
+import { User as UserType, defaultUsers, hasPermission } from "../data/users";
 
 interface CreateWorkForm {
   title: string;
@@ -386,7 +368,7 @@ export default function CreateWork() {
           </Card>
         </div>
 
-        {/* Bot��es de Ação */}
+        {/* Botões de Ação */}
         <div className="mt-6 flex justify-end gap-4">
           <Button
             type="button"
