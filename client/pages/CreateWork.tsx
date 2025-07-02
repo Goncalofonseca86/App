@@ -387,7 +387,21 @@ export default function CreateWork() {
 
                 {/* Utilizadores Disponíveis */}
                 <div>
-                  <h4 className="font-medium mb-3">Adicionar utilizadores:</h4>
+                  <h4 className="font-medium mb-3">
+                    Adicionar utilizadores: (
+                    {
+                      availableUsers.filter(
+                        (user) => !formData.destinedUsers.includes(user.id),
+                      ).length
+                    }{" "}
+                    disponíveis)
+                  </h4>
+                  {availableUsers.length === 0 && (
+                    <div className="text-sm text-red-600 mb-3 p-2 bg-red-50 rounded">
+                      ⚠️ Nenhum utilizador carregado. Verifique se está
+                      autenticado.
+                    </div>
+                  )}
                   <div className="space-y-2 max-h-60 overflow-y-auto">
                     {availableUsers
                       .filter(
