@@ -57,9 +57,7 @@ export default function CreateWork() {
       setCurrentUser(user);
 
       // Mostrar todos os utilizadores activos (incluindo o próprio)
-      setAvailableUsers(
-        defaultUsers.filter((u) => u.isActive),
-      );
+      setAvailableUsers(defaultUsers.filter((u) => u.isActive));
 
       // Criar obra de teste se não existir nenhuma (apenas para debug)
       const existingWorks = JSON.parse(localStorage.getItem("works") || "[]");
@@ -110,7 +108,9 @@ export default function CreateWork() {
     console.log("Obra criada:", newWork);
     console.log("Total de obras guardadas:", existingWorks.length);
 
-    alert(`Obra criada com sucesso! ${formData.destinedUsers.length} utilizadores atribuídos.`);
+    alert(
+      `Obra criada com sucesso! ${formData.destinedUsers.length} utilizadores atribuídos.`,
+    );
     navigate("/dashboard");
   };
 
@@ -184,239 +184,189 @@ export default function CreateWork() {
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-4xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Detalhes da Obra */}
-            <Card className="card-leirisonda">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Plus className="w-5 h-5" />
-                  Detalhes da Obra
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Detalhes da Obra */}
+          <Card className="card-leirisonda">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Plus className="w-5 h-5" />
+                Detalhes da Obra
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Título *
+                </label>
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      title: e.target.value,
+                    }))
+                  }
+                  className="input-leirisonda"
+                  placeholder="Ex: Manutenção de Piscina - Cliente X"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Descrição *
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
+                  className="input-leirisonda min-h-[100px] resize-y"
+                  placeholder="Descreva os detalhes da obra..."
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <MapPin className="w-4 h-4 inline mr-1" />
+                  Localização *
+                </label>
+                <input
+                  type="text"
+                  value={formData.location}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      location: e.target.value,
+                    }))
+                  }
+                  className="input-leirisonda"
+                  placeholder="Ex: Porto, Vila Nova de Gaia"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Título *
+                    Prioridade
                   </label>
-                  <input
-                    type="text"
-                    value={formData.title}
+                  <select
+                    value={formData.priority}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        title: e.target.value,
+                        priority: e.target.value as any,
                       }))
                     }
                     className="input-leirisonda"
-                    placeholder="Ex: Manutenção de Piscina - Cliente X"
-                    required
-                  />
+                  >
+                    <option value="low">Baixa</option>
+                    <option value="medium">Média</option>
+                    <option value="high">Alta</option>
+                  </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Descrição *
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        description: e.target.value,
-                      }))
-                    }
-                    className="input-leirisonda min-h-[100px] resize-y"
-                    placeholder="Descreva os detalhes da obra..."
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <MapPin className="w-4 h-4 inline mr-1" />
-                    Localização *
+                    <Clock className="w-4 h-4 inline mr-1" />
+                    Horas Estimadas
                   </label>
                   <input
-                    type="text"
-                    value={formData.location}
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={formData.estimatedHours}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        location: e.target.value,
+                        estimatedHours: parseInt(e.target.value),
                       }))
                     }
                     className="input-leirisonda"
-                    placeholder="Ex: Porto, Vila Nova de Gaia"
-                    required
                   />
                 </div>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Prioridade
-                    </label>
-                    <select
-                      value={formData.priority}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          priority: e.target.value as any,
-                        }))
-                      }
-                      className="input-leirisonda"
-                    >
-                      <option value="low">Baixa</option>
-                      <option value="medium">Média</option>
-                      <option value="high">Alta</option>
-                    </select>
-                  </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <Calendar className="w-4 h-4 inline mr-1" />
+                  Prazo
+                </label>
+                <input
+                  type="date"
+                  value={formData.deadline}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      deadline: e.target.value,
+                    }))
+                  }
+                  className="input-leirisonda"
+                  required
+                />
+              </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <Clock className="w-4 h-4 inline mr-1" />
-                      Horas Estimadas
-                    </label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="100"
-                      value={formData.estimatedHours}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          estimatedHours: parseInt(e.target.value),
-                        }))
-                      }
-                      className="input-leirisonda"
-                    />
-                  </div>
+              {/* Preview da Obra */}
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-medium mb-2">Preview:</h4>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-medium">
+                    {formData.title || "Título da obra"}
+                  </span>
+                  <Badge className={getPriorityColor(formData.priority)}>
+                    {formData.priority.toUpperCase()}
+                  </Badge>
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <Calendar className="w-4 h-4 inline mr-1" />
-                    Prazo
-                  </label>
-                  <input
-                    type="date"
-                    value={formData.deadline}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        deadline: e.target.value,
-                      }))
-                    }
-                    className="input-leirisonda"
-                    required
-                  />
+                <p className="text-sm text-gray-600 mb-2">
+                  {formData.description || "Descrição da obra"}
+                </p>
+                <div className="flex items-center gap-4 text-xs text-gray-500">
+                  <span>📍 {formData.location || "Localização"}</span>
+                  <span>⏰ {formData.estimatedHours}h</span>
+                  <span>📅 {formData.deadline || "Sem prazo"}</span>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
 
-                {/* Preview da Obra */}
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-medium mb-2">Preview:</h4>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-medium">
-                      {formData.title || "Título da obra"}
-                    </span>
-                    <Badge className={getPriorityColor(formData.priority)}>
-                      {formData.priority.toUpperCase()}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-2">
-                    {formData.description || "Descrição da obra"}
-                  </p>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <span>📍 {formData.location || "Localização"}</span>
-                    <span>⏰ {formData.estimatedHours}h</span>
-                    <span>📅 {formData.deadline || "Sem prazo"}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Seleção de Utilizadores */}
-            <Card className="card-leirisonda">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="w-5 h-5" />
-                  Utilizadores Destinados ({formData.destinedUsers.length})
-                </CardTitle>
-                <CardDescription>
-                  Selecione os utilizadores que irão trabalhar nesta obra
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* Utilizadores Selecionados */}
-                {formData.destinedUsers.length > 0 && (
-                  <div className="mb-6">
-                    <h4 className="font-medium mb-3 text-green-700">
-                      Selecionados:
-                    </h4>
-                    <div className="space-y-2">
-                      {formData.destinedUsers.map((userId) => {
-                        const user = availableUsers.find(
-                          (u) => u.id === userId,
-                        );
-                        return user ? (
-                          <div
-                            key={user.id}
-                            className="flex items-center justify-between bg-green-50 p-3 rounded-lg border border-green-200"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div>
-                                <div className="font-medium text-green-900">
-                                  {user.name}
-                                </div>
-                                <div className="text-sm text-green-700">
-                                  {user.department}
-                                </div>
-                              </div>
-                              <Badge className={getRoleColor(user.role)}>
-                                {getRoleDisplayName(user.role)}
-                              </Badge>
-                            </div>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={() => removeUserFromWork(user.id)}
-                              className="border-red-200 text-red-700 hover:bg-red-50"
-                            >
-                              <X className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        ) : null;
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* Utilizadores Disponíveis */}
-                <div>
-                  <h4 className="font-medium mb-3">
-                    Adicionar utilizadores: ({availableUsers.filter(user => !formData.destinedUsers.includes(user.id)).length} disponíveis)
+          {/* Seleção de Utilizadores */}
+          <Card className="card-leirisonda">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                Utilizadores Destinados ({formData.destinedUsers.length})
+              </CardTitle>
+              <CardDescription>
+                Selecione os utilizadores que irão trabalhar nesta obra
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* Utilizadores Selecionados */}
+              {formData.destinedUsers.length > 0 && (
+                <div className="mb-6">
+                  <h4 className="font-medium mb-3 text-green-700">
+                    Selecionados:
                   </h4>
-                  {availableUsers.length === 0 && (
-                    <div className="text-sm text-red-600 mb-3 p-2 bg-red-50 rounded">
-                      ⚠️ Nenhum utilizador carregado. Verifique se está autenticado.
-                    </div>
-                  )}
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {availableUsers
-                      .filter(
-                        (user) => !formData.destinedUsers.includes(user.id),
-                      )
-                      .map((user) => (
+                  <div className="space-y-2">
+                    {formData.destinedUsers.map((userId) => {
+                      const user = availableUsers.find((u) => u.id === userId);
+                      return user ? (
                         <div
                           key={user.id}
-                          className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
-                          onClick={() => addUserToWork(user.id)}
+                          className="flex items-center justify-between bg-green-50 p-3 rounded-lg border border-green-200"
                         >
                           <div className="flex items-center gap-3">
                             <div>
-                              <div className="font-medium">{user.name}</div>
-                              <div className="text-sm text-gray-500">
+                              <div className="font-medium text-green-900">
+                                {user.name}
+                              </div>
+                              <div className="text-sm text-green-700">
                                 {user.department}
                               </div>
                             </div>
@@ -424,40 +374,90 @@ export default function CreateWork() {
                               {getRoleDisplayName(user.role)}
                             </Badge>
                           </div>
-                          <Button type="button" variant="outline" size="sm">
-                            <Plus className="w-4 h-4" />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => removeUserFromWork(user.id)}
+                            className="border-red-200 text-red-700 hover:bg-red-50"
+                          >
+                            <X className="w-4 h-4" />
                           </Button>
                         </div>
-                      ))}
+                      ) : null;
+                    })}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              )}
 
-          {/* Botões de Ação */}
-          <div className="mt-6 flex justify-end gap-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => navigate("/dashboard")}
-            >
-              Cancelar
-            </Button>
-            <Button
-              type="submit"
-              className="btn-leirisonda"
-              disabled={
-                !formData.title ||
-                !formData.description ||
-                !formData.location
-              }
-            >
-              Criar Obra
-            </Button>
-          </div>
-        </form>
-      </div>
+              {/* Utilizadores Disponíveis */}
+              <div>
+                <h4 className="font-medium mb-3">
+                  Adicionar utilizadores: (
+                  {
+                    availableUsers.filter(
+                      (user) => !formData.destinedUsers.includes(user.id),
+                    ).length
+                  }{" "}
+                  disponíveis)
+                </h4>
+                {availableUsers.length === 0 && (
+                  <div className="text-sm text-red-600 mb-3 p-2 bg-red-50 rounded">
+                    ⚠️ Nenhum utilizador carregado. Verifique se está
+                    autenticado.
+                  </div>
+                )}
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {availableUsers
+                    .filter((user) => !formData.destinedUsers.includes(user.id))
+                    .map((user) => (
+                      <div
+                        key={user.id}
+                        className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
+                        onClick={() => addUserToWork(user.id)}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <div className="font-medium">{user.name}</div>
+                            <div className="text-sm text-gray-500">
+                              {user.department}
+                            </div>
+                          </div>
+                          <Badge className={getRoleColor(user.role)}>
+                            {getRoleDisplayName(user.role)}
+                          </Badge>
+                        </div>
+                        <Button type="button" variant="outline" size="sm">
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Botões de Ação */}
+        <div className="mt-6 flex justify-end gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate("/dashboard")}
+          >
+            Cancelar
+          </Button>
+          <Button
+            type="submit"
+            className="btn-leirisonda"
+            disabled={
+              !formData.title || !formData.description || !formData.location
+            }
+          >
+            Criar Obra
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }
