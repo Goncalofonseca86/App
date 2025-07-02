@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Layout from "./components/Layout";
 import WorkAssignment from "./pages/WorkAssignment";
 import Dashboard from "./pages/Dashboard";
-import CreateWork from "./pages/CreateWorkSimple";
+import CreateWork from "./pages/CreateWork";
 import Login from "./pages/Login";
 import "./index.css";
 
