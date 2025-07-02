@@ -56,10 +56,8 @@ export default function CreateWork() {
       const user = JSON.parse(userData);
       setCurrentUser(user);
 
-      // Filtrar utilizadores disponíveis (excluir o próprio)
-      setAvailableUsers(
-        defaultUsers.filter((u) => u.id !== user.id && u.isActive),
-      );
+      // Mostrar todos os utilizadores activos (incluindo o próprio)
+      setAvailableUsers(defaultUsers.filter((u) => u.isActive));
     } else {
       navigate("/login");
     }
