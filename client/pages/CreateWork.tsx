@@ -85,7 +85,12 @@ export default function CreateWork() {
     existingWorks.push(newWork);
     localStorage.setItem("works", JSON.stringify(existingWorks));
 
-    alert("Obra criada com sucesso!");
+    console.log("Obra criada:", newWork);
+    console.log("Total de obras guardadas:", existingWorks.length);
+
+    alert(
+      `Obra criada com sucesso! ${formData.destinedUsers.length} utilizadores atribuídos.`,
+    );
     navigate("/dashboard");
   };
 
