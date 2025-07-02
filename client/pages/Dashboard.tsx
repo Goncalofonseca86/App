@@ -232,23 +232,24 @@ export default function Dashboard() {
               {canViewAllWorks ? "Todas as Obras" : "Minhas Obras"}
             </h2>
             <div className="flex gap-2">
+              {(canCreateWorks ||
+                hasPermission(currentUser, "assign_works")) && (
+                <Button
+                  onClick={() => navigate("/gestao-obras")}
+                  className="btn-leirisonda"
+                >
+                  <Users className="w-4 h-4 mr-2" />
+                  Centro de Gestão
+                </Button>
+              )}
               {canCreateWorks && (
                 <Button
                   onClick={() => navigate("/create-work")}
-                  className="btn-leirisonda"
+                  variant="outline"
+                  className="border-blue-200 text-blue-700 hover:bg-blue-50"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Nova Obra
-                </Button>
-              )}
-              {hasPermission(currentUser, "assign_works") && (
-                <Button
-                  variant="outline"
-                  onClick={() => navigate("/gestao-utilizadores-obras")}
-                  className="border-green-200 text-green-700 hover:bg-green-50"
-                >
-                  <Users className="w-4 h-4 mr-2" />
-                  Gerir Utilizadores
                 </Button>
               )}
               <Button
