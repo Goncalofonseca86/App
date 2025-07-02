@@ -33,55 +33,6 @@ export default function CreateWork() {
     }
   }, [navigate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!currentUser) {
-      alert("Erro: Utilizador não encontrado");
-      return;
-    }
-
-    // Criar nova obra
-    const newWork = {
-      id: Date.now().toString(),
-      ...formData,
-      status: "pending" as const,
-      createdBy: currentUser.id,
-      createdAt: new Date().toISOString(),
-    };
-
-    // Guardar no localStorage
-    const existingWorks = JSON.parse(localStorage.getItem("works") || "[]");
-    existingWorks.push(newWork);
-    localStorage.setItem("works", JSON.stringify(existingWorks));
-
-    console.log("Obra criada:", newWork);
-    console.log("Total obras:", existingWorks.length);
-
-    alert(
-      `Obra criada com sucesso! ${formData.destinedUsers.length} utilizadores atribuídos.`,
-    );
-    navigate("/dashboard");
-  };
-
-  const addUserToWork = (userId: string) => {
-    console.log("Adicionando utilizador:", userId);
-    if (!formData.destinedUsers.includes(userId)) {
-      setFormData((prev) => ({
-        ...prev,
-        destinedUsers: [...prev.destinedUsers, userId],
-      }));
-    }
-  };
-
-  const removeUserFromWork = (userId: string) => {
-    console.log("Removendo utilizador:", userId);
-    setFormData((prev) => ({
-      ...prev,
-      destinedUsers: prev.destinedUsers.filter((id) => id !== userId),
-    }));
-  };
-
   if (!currentUser) {
     return (
       <div className="flex items-center justify-center h-full">
