@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WorkAssignment from "./pages/WorkAssignment";
 import Dashboard from "./pages/Dashboard";
 import CreateWork from "./pages/CreateWork";
+import WorkUserManagement from "./pages/WorkUserManagement";
 import Login from "./pages/Login";
 import "./index.css";
 
@@ -16,6 +17,11 @@ function App() {
         <Route path="/create-work" element={<CreateWork />} />
         <Route path="/atribuicao-obras" element={<WorkAssignment />} />
         <Route path="/work-assignment" element={<WorkAssignment />} />
+        <Route
+          path="/gestao-utilizadores-obras"
+          element={<WorkUserManagement />}
+        />
+        <Route path="/work-user-management" element={<WorkUserManagement />} />
         <Route path="/" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
