@@ -16,27 +16,18 @@ export default function CreateWork() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [availableUsers, setAvailableUsers] = useState<UserType[]>([]);
-  const [formData, setFormData] = useState<CreateWorkForm>({
-    title: "",
-    description: "",
-    location: "",
-    priority: "medium",
-    estimatedHours: 1,
-    deadline: "",
-    destinedUsers: [],
-  });
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
   useEffect(() => {
     const userData = localStorage.getItem("currentUser");
     if (userData) {
       const user = JSON.parse(userData);
       setCurrentUser(user);
-      console.log("Utilizador actual:", user);
 
       // Carregar todos os utilizadores activos
       const users = defaultUsers.filter((u) => u.isActive);
       setAvailableUsers(users);
-      console.log("Utilizadores disponíveis:", users);
+      console.log("Utilizadores disponíveis:", users.length);
     } else {
       navigate("/login");
     }
