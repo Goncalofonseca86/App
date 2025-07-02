@@ -448,10 +448,7 @@ export default function CreateWork() {
               type="submit"
               className="btn-leirisonda"
               disabled={
-                !formData.title ||
-                !formData.description ||
-                !formData.location ||
-                formData.destinedUsers.length === 0
+                !formData.title || !formData.description || !formData.location
               }
             >
               Criar Obra
