@@ -177,27 +177,10 @@ export default function CreateWork() {
   }
 
   return (
-    <div className="leirisonda-main">
-      <div className="dashboard-hero">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate("/dashboard")}
-            className="bg-white/10 border-white/30 text-white hover:bg-white/20"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar
-          </Button>
-          <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
-              Criar Nova Obra
-            </h1>
-            <p className="text-white/90">
-              Definir detalhes da obra e selecionar utilizadores destinados
-            </p>
-          </div>
-        </div>
+    <div>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Nova Obra</h1>
+        <p className="text-gray-600">Criar nova obra e atribuir utilizadores</p>
       </div>
 
       <div className="max-w-4xl mx-auto">
