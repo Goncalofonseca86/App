@@ -1,5 +1,4 @@
 import { defineConfig } from "vite";
-import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
@@ -7,10 +6,8 @@ export default defineConfig(() => ({
     host: "::",
     port: 8080,
   },
-  root: path.resolve(__dirname, "./leirisonda-deploy"),
   build: {
-    outDir: "../dist/spa",
+    outDir: "dist/spa",
   },
   plugins: [],
-  publicDir: false,
 }));
